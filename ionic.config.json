@@ -1,0 +1,7 @@
+{
+  "name": "python-no-bolso",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}
