@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import { IonContent } from '@ionic/angular';
 
 @Component({
@@ -6,6 +7,6 @@ import { IonContent } from '@ionic/angular';
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
   standalone: true,
-  imports: [IonContent],
+  imports: [IonContent, RouterLink],
 })
 export class HomePage {}
