@@ -1,0 +1,106 @@
+<section class="python-playground">
+
+  <header class="playground-header">
+
+    <div class="header-left">
+
+      <div class="window-buttons">
+        <span class="red"></span>
+        <span class="yellow"></span>
+        <span class="green"></span>
+      </div>
+
+      <span class="file-name">
+        main.py
+      </span>
+
+    </div>
+
+    <div class="python-status">
+      <span class="status-dot"></span>
+      Python
+    </div>
+
+  </header>
+
+
+  <div class="editor-area">
+
+    <div class="editor-label">
+      EDITOR
+    </div>
+
+   <textarea
+  [(ngModel)]="code"
+  spellcheck="false"
+  autocomplete="off"
+  autocorrect="off"
+  autocapitalize="off"
+  placeholder="# Digite seu código aqui"
+  aria-label="Editor de código Python"
+ ></textarea>
+
+  </div>
+
+
+  <div class="playground-actions">
+
+    <button
+      type="button"
+      class="reset-button"
+      (click)="resetCode()"
+    >
+      ↺ Restaurar
+    </button>
+
+    <button
+      type="button"
+      class="run-button"
+      (click)="runCode()"
+      [disabled]="isRunning"
+    >
+
+      @if (isRunning) {
+        ⏳ Executando...
+      } @else {
+        ▶ Executar código
+      }
+
+    </button>
+
+  </div>
+
+
+  <section class="console">
+
+    <header class="console-header">
+
+      <div>
+        <span class="console-icon">
+          ›_
+        </span>
+
+        <strong>
+          Saída
+        </strong>
+      </div>
+
+      <button
+        type="button"
+        (click)="clearOutput()"
+      >
+        Limpar
+      </button>
+
+    </header>
+
+
+    <pre class="console-output">@if (output) {
+{{ output }}
+} @else {
+A saída do programa aparecerá aqui.
+}</pre>
+
+  </section>
+
+</section>

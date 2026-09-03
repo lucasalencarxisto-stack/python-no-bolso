@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { IonContent } from '@ionic/angular';
 
+import { LESSONS } from '../data/lessons';
+
 @Component({
   selector: 'app-lessons',
   templateUrl: './lessons.page.html',
@@ -12,4 +14,6 @@ import { IonContent } from '@ionic/angular';
     RouterLink
   ]
 })
-export class LessonsPage {}
+export class LessonsPage {
+  lessons = LESSONS;
+}

@@ -1,0 +1,306 @@
+.python-playground {
+  width: 100%;
+
+  overflow: hidden;
+
+  background: #0b111a;
+
+  border: 1px solid #2b3b52;
+  border-radius: 17px;
+
+  box-sizing: border-box;
+}
+
+/* Header */
+
+.playground-header {
+  min-height: 44px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 12px;
+  padding: 0 15px;
+
+  background: #121b28;
+
+  border-bottom: 1px solid #293a51;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+
+  gap: 14px;
+}
+
+.window-buttons {
+  display: flex;
+  gap: 6px;
+}
+
+.window-buttons span {
+  width: 9px;
+  height: 9px;
+
+  border-radius: 50%;
+}
+
+.red {
+  background: #ff5f57;
+}
+
+.yellow {
+  background: #febc2e;
+}
+
+.green {
+  background: #28c840;
+}
+
+.file-name {
+  color: #8796aa;
+
+  font-family: Consolas, monospace;
+  font-size: 11px;
+}
+
+.python-status {
+  display: flex;
+  align-items: center;
+
+  gap: 6px;
+
+  color: #8190a4;
+
+  font-size: 10px;
+  font-weight: 600;
+}
+
+.status-dot {
+  width: 7px;
+  height: 7px;
+
+  background: #28c840;
+
+  border-radius: 50%;
+}
+
+/* Editor */
+
+.editor-area {
+  position: relative;
+
+  background: #070b11;
+}
+
+.editor-label {
+  padding: 10px 16px 0;
+
+  color: #53647b;
+
+  font-size: 9px;
+  font-weight: 700;
+
+  letter-spacing: 1.2px;
+}
+
+textarea {
+  width: 100%;
+  min-height: 180px;
+
+  display: block;
+
+  padding: 14px 18px 20px;
+
+  resize: vertical;
+
+  background: transparent;
+  color: #74e6b2;
+
+  border: 0;
+  outline: 0;
+
+  box-sizing: border-box;
+
+  font-family:
+    Consolas,
+    "Courier New",
+    monospace;
+
+  font-size: 15px;
+  line-height: 1.7;
+
+  caret-color: #579fff;
+}
+
+textarea::placeholder {
+  color: #53647b;
+  opacity: 0.75;
+}
+
+textarea::selection {
+  background: #22476d;
+}
+
+/* Botões */
+
+.playground-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+
+  gap: 10px;
+  padding: 12px 14px;
+
+  background: #0e1621;
+
+  border-top: 1px solid #202f43;
+}
+
+.playground-actions button {
+  width: auto;
+
+  padding: 11px 16px;
+
+  border-radius: 10px;
+
+  font-size: 12px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition:
+    transform 0.2s ease,
+    background 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.playground-actions button:hover {
+  transform: translateY(-1px);
+}
+
+.reset-button {
+  background: #151e2a;
+  color: #9aa9bb;
+
+  border: 1px solid #2b394d;
+}
+
+.run-button {
+  background: #17477b;
+  color: #ffffff;
+
+  border: 1px solid #398cf2;
+}
+
+.run-button:hover {
+  background: #1d578f;
+}
+
+.run-button:disabled {
+  opacity: 0.6;
+
+  cursor: wait;
+  transform: none;
+}
+
+/* Console */
+
+.console {
+  background: #08110e;
+
+  border-top: 1px solid #244638;
+}
+
+.console-header {
+  min-height: 40px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 0 15px;
+
+  background: #0c1813;
+
+  border-bottom: 1px solid #213b31;
+}
+
+.console-header > div {
+  display: flex;
+  align-items: center;
+
+  gap: 8px;
+}
+
+.console-icon {
+  color: #63dda5;
+
+  font-family: Consolas, monospace;
+  font-size: 13px;
+}
+
+.console-header strong {
+  color: #8dddb9;
+
+  font-size: 11px;
+}
+
+.console-header button {
+  padding: 5px 8px;
+
+  background: transparent;
+  color: #718b7e;
+
+  border: 0;
+
+  font-size: 10px;
+
+  cursor: pointer;
+}
+
+.console-output {
+  min-height: 70px;
+
+  margin: 0;
+  padding: 16px 18px;
+
+  overflow-x: auto;
+
+  color: #b7ead3;
+
+  font-family:
+    Consolas,
+    "Courier New",
+    monospace;
+
+  font-size: 13px;
+  line-height: 1.65;
+
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+/* Mobile */
+
+@media (max-width: 420px) {
+
+  textarea {
+    min-height: 160px;
+
+    padding: 14px 15px 18px;
+
+    font-size: 14px;
+  }
+
+  .playground-actions {
+    justify-content: space-between;
+  }
+
+  .playground-actions button {
+    padding: 10px 13px;
+  }
+
+}
