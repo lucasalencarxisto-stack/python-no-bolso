@@ -1,5 +1,6 @@
 <section class="python-playground">
 
+  <!-- Cabeçalho -->
   <header class="playground-header">
 
     <div class="header-left">
@@ -16,33 +17,39 @@
 
     </div>
 
+
     <div class="python-status">
+
       <span class="status-dot"></span>
+
       Python
+
     </div>
 
   </header>
 
 
+  <!-- Editor -->
   <div class="editor-area">
 
     <div class="editor-label">
       EDITOR
     </div>
 
-   <textarea
-  [(ngModel)]="code"
-  spellcheck="false"
-  autocomplete="off"
-  autocorrect="off"
-  autocapitalize="off"
-  placeholder="# Digite seu código aqui"
-  aria-label="Editor de código Python"
- ></textarea>
+    <textarea
+      [(ngModel)]="code"
+      spellcheck="false"
+      autocomplete="off"
+      autocorrect="off"
+      autocapitalize="off"
+      placeholder="# Digite seu código aqui"
+      aria-label="Editor de código Python"
+    ></textarea>
 
   </div>
 
 
+  <!-- Ações -->
   <div class="playground-actions">
 
     <button
@@ -53,6 +60,7 @@
       ↺ Restaurar
     </button>
 
+
     <button
       type="button"
       class="run-button"
@@ -61,9 +69,13 @@
     >
 
       @if (isRunning) {
+
         ⏳ Executando...
+
       } @else {
+
         ▶ Executar código
+
       }
 
     </button>
@@ -71,36 +83,192 @@
   </div>
 
 
-  <section class="console">
+  <!-- Resultado -->
+  <section
+    class="console"
+    [class.has-output]="output && !isRunning"
+  >
 
     <header class="console-header">
 
-      <div>
+      <div class="console-title">
+
         <span class="console-icon">
-          ›_
+          &gt;_
         </span>
 
-        <strong>
-          Saída
-        </strong>
+        <div>
+
+          <strong>
+            Resultado do programa
+          </strong>
+
+          <small>
+            Veja aqui o que seu código mostrou
+          </small>
+
+        </div>
+
       </div>
 
-      <button
-        type="button"
-        (click)="clearOutput()"
-      >
-        Limpar
-      </button>
+
+      @if (isRunning) {
+
+        <span class="console-status running">
+          Executando...
+        </span>
+
+      } @else if (output) {
+
+        <span class="console-status ready">
+          ● Resultado pronto
+        </span>
+
+      }
 
     </header>
 
 
-    <pre class="console-output">@if (output) {
-{{ output }}
-} @else {
-A saída do programa aparecerá aqui.
-}</pre>
+    <div class="console-body">
+
+      @if (isRunning) {
+
+        <div class="output-placeholder running-output">
+
+          <span>⏳</span>
+
+          <span>
+            Executando seu código...
+          </span>
+
+        </div>
+
+      } @else if (output) {
+
+        <div class="output-result">
+
+          <span class="output-label">
+            SAÍDA
+          </span>
+
+          <pre>{{ output }}</pre>
+
+        </div>
+
+      } @else {
+
+        <div class="output-placeholder">
+
+          <span>💻</span>
+
+          <span>
+            A saída do programa aparecerá aqui.
+          </span>
+
+        </div>
+
+      }
+
+    </div>
 
   </section>
+
+
+  <!-- Erro de execução -->
+  @if (friendlyError) {
+
+    <section class="friendly-error">
+
+      <div class="error-heading">
+
+        <span class="error-icon">
+          ⚠️
+        </span>
+
+        <div>
+
+          <strong>
+            Ops! Tem algo para corrigir
+          </strong>
+
+          <p>
+            {{ friendlyError }}
+          </p>
+
+        </div>
+
+      </div>
+
+
+      @if (technicalError) {
+
+        <details class="technical-error">
+
+          <summary>
+            Ver detalhes técnicos
+          </summary>
+
+          <pre>{{ technicalError }}</pre>
+
+        </details>
+
+      }
+
+    </section>
+
+  }
+
+
+  <!-- Feedback do desafio -->
+  @if (challengeStatus !== 'idle') {
+
+    <div
+      class="challenge-feedback"
+      [class.success]="challengeStatus === 'success'"
+      [class.incorrect]="challengeStatus === 'incorrect'"
+    >
+
+      @if (challengeStatus === 'success') {
+
+        <span class="feedback-icon">
+          ✅
+        </span>
+
+        <div>
+
+          <strong>
+            Desafio concluído!
+          </strong>
+
+          <p>
+            Muito bem! O resultado do seu código está correto.
+          </p>
+
+        </div>
+
+      } @else {
+
+        <span class="feedback-icon">
+          💡
+        </span>
+
+        <div>
+
+          <strong>
+            Quase lá!
+          </strong>
+
+          <p>
+            Seu código executou, mas o resultado ainda não é o esperado.
+            Revise a dica do exercício e tente novamente.
+          </p>
+
+        </div>
+
+      }
+
+    </div>
+
+  }
 
 </section>

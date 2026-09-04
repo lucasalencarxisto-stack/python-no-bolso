@@ -4,310 +4,282 @@
 
     @if (lesson) {
 
-      <!-- Header -->
-      <header class="lesson-header">
+    <!-- Header -->
+    <header class="lesson-header">
 
-        <button
-          type="button"
-          class="back-button"
-          (click)="goBack()"
-          aria-label="Voltar para as aulas"
-        >
-          ←
-        </button>
+      <button type="button" class="back-button" (click)="goBack()" aria-label="Voltar para as aulas">
+        ←
+      </button>
 
-        <div class="lesson-heading">
+      <div class="lesson-heading">
 
-          <span class="badge">
-            {{ lesson.number }}
-          </span>
+        <span class="badge">
+          {{ lesson.number }}
+        </span>
 
-          <h1>
-            {{ lesson.icon }}
-            {{ lesson.title }}
-          </h1>
+        <h1>
+          {{ lesson.icon }} {{ lesson.title }}
+        </h1>
 
-          <p>
-            {{ lesson.description }}
-          </p>
+        <p>
+          {{ lesson.description }}
+        </p>
+
+      </div>
+
+    </header>
+
+
+    <!-- Conteúdo da aula -->
+    <section class="lesson-content">
+
+      @for (block of lesson.content; track $index) {
+
+      @switch (block.type) {
+
+      <!-- Texto -->
+      @case ('text') {
+
+      <article class="content-card">
+
+        @if (block.title) {
+        <h2>{{ block.title }}</h2>
+        }
+
+        <p>{{ block.text }}</p>
+
+      </article>
+
+      }
+
+
+      <!-- Analogia -->
+      @case ('analogy') {
+
+      <article class="analogy-card">
+
+        @if (block.title) {
+        <h2>{{ block.title }}</h2>
+        }
+
+        <p>{{ block.text }}</p>
+
+      </article>
+
+      }
+
+
+      <!-- Lista -->
+      @case ('list') {
+
+      <article class="content-card">
+
+        @if (block.title) {
+        <h2>{{ block.title }}</h2>
+        }
+
+        <ul>
+
+          @for (item of block.items; track item) {
+          <li>{{ item }}</li>
+          }
+
+        </ul>
+
+      </article>
+
+      }
+
+
+      <!-- Código -->
+      @case ('code') {
+
+      <article class="code-card">
+
+        @if (block.title) {
+        <h2>{{ block.title }}</h2>
+        }
+
+        <div class="terminal">
+
+          <div class="terminal-header">
+
+            <div class="terminal-buttons">
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+
+            <span class="terminal-title">
+              python
+            </span>
+
+          </div>
+
+          <div class="terminal-body">
+
+            <span class="terminal-prompt">
+              &gt;&gt;&gt;
+            </span>
+
+            <pre><code>{{ block.code }}</code></pre>
+
+          </div>
 
         </div>
 
-      </header>
 
+        @if (block.explanation) {
 
-      <!-- Conteúdo da aula -->
-      <section class="lesson-content">
+        <p class="code-explanation">
+          {{ block.explanation }}
+        </p>
 
-        @for (block of lesson.content; track $index) {
+        }
 
-          @switch (block.type) {
 
+        @if (block.output) {
 
-            <!-- Texto -->
-            @case ('text') {
+        <div class="output-box">
 
-              <article class="content-card">
+          <span class="output-label">
+            SAÍDA
+          </span>
 
-                @if (block.title) {
-                  <h2>{{ block.title }}</h2>
-                }
+          <pre>{{ block.output }}</pre>
 
-                <p>
-                  {{ block.text }}
-                </p>
+        </div>
 
-              </article>
+        }
 
-            }
+      </article>
 
+      }
 
-            <!-- Analogia -->
-            @case ('analogy') {
 
-              <article class="analogy-card">
+      <!-- Desafio -->
+      @case ('challenge') {
 
-                @if (block.title) {
-                  <h2>{{ block.title }}</h2>
-                }
+      <article class="challenge-card">
 
-                <p>
-                  {{ block.text }}
-                </p>
+        @if (block.title) {
+        <h2>{{ block.title }}</h2>
+        }
 
-              </article>
+        <p class="challenge-description">
+          {{ block.description }}
+        </p>
 
-            }
 
+        @if (block.hint) {
 
-            <!-- Lista -->
-            @case ('list') {
+        <details class="hint">
 
-              <article class="content-card">
+          <summary>
+            Ver dica
+          </summary>
 
-                @if (block.title) {
-                  <h2>{{ block.title }}</h2>
-                }
+          <p>
+            {{ block.hint }}
+          </p>
 
-                <ul>
+        </details>
 
-                  @for (item of block.items; track item) {
-                    <li>
-                      {{ item }}
-                    </li>
-                  }
+        }
 
-                </ul>
 
-              </article>
+        <!-- Terminal interativo -->
+        <div class="challenge-terminal">
 
-            }
+    <app-python-terminal 
+      [initialCode]="block.starterCode || ''"
+      [expectedOutput]="block.expectedOutput"
+    ></app-python-terminal>
 
+        </div>
 
-            <!-- Código -->
-            @case ('code') {
+      </article>
 
-              <article class="code-card">
+      }
 
-                @if (block.title) {
-                  <h2>{{ block.title }}</h2>
-                }
 
-                <div class="terminal">
+      <!-- Dica -->
+      @case ('tip') {
 
-                  <div class="terminal-header">
+      <article class="tip-card">
 
-                    <div class="terminal-buttons">
-                      <span></span>
-                      <span></span>
-                      <span></span>
-                    </div>
+        <span>💡</span>
 
-                    <span class="terminal-title">
-                      python
-                    </span>
+        <p>
+          {{ block.text }}
+        </p>
 
-                  </div>
+      </article>
 
+      }
 
-                  <div class="terminal-body">
 
-                    <span class="terminal-prompt">
-                      >>>
-                    </span>
+      <!-- Resumo -->
+      @case ('summary') {
 
-                    <pre><code>{{ block.code }}</code></pre>
+      <article class="summary-card">
 
-                  </div>
+        <h2>
+          {{ block.title || 'Resumo da aula' }}
+        </h2>
 
-                </div>
+        <ul>
 
-
-                @if (block.explanation) {
-
-                  <p class="code-explanation">
-                    {{ block.explanation }}
-                  </p>
-
-                }
-
-
-                @if (block.output) {
-
-                  <div class="output-box">
-
-                    <span class="output-label">
-                      SAÍDA
-                    </span>
-
-                    <pre>{{ block.output }}</pre>
-
-                  </div>
-
-                }
-
-              </article>
-
-            }
-
-
-            <!-- Desafio -->
-            @case ('challenge') {
-
-              <article class="challenge-card">
-
-                @if (block.title) {
-                  <h2>{{ block.title }}</h2>
-                }
-
-                <p>
-                  {{ block.description }}
-                </p>
-
-
-                @if (block.hint) {
-
-                  <details class="hint">
-
-                    <summary>
-                      Ver dica
-                    </summary>
-
-                    <p>
-                      {{ block.hint }}
-                    </p>
-
-                  </details>
-
-                }
-
-              </article>
-
-            }
-
-
-            <!-- Dica -->
-            @case ('tip') {
-
-              <article class="tip-card">
-
-                <span>
-                  💡
-                </span>
-
-                <p>
-                  {{ block.text }}
-                </p>
-
-              </article>
-
-            }
-
-
-            <!-- Resumo -->
-            @case ('summary') {
-
-              <article class="summary-card">
-
-                <h2>
-                  {{ block.title || 'Resumo da aula' }}
-                </h2>
-
-                <ul>
-
-                  @for (item of block.items; track item) {
-
-                    <li>
-                      {{ item }}
-                    </li>
-
-                  }
-
-                </ul>
-
-              </article>
-
-            }
-
+          @for (item of block.items; track item) {
+          <li>{{ item }}</li>
           }
 
-        }
+        </ul>
 
-      </section>
-<section class="practice-section">
+      </article>
 
- <app-python-terminal></app-python-terminal>
-</section>
+      }
 
-      <!-- Concluir aula -->
-      <button
-        type="button"
-        class="complete-button"
-        (click)="completeLesson()"
-      >
+      }
 
-        @if (progress.isCompleted(lesson.id)) {
+      }
 
-          ✅ Aula concluída
+    </section>
 
-        } @else {
 
-          ✓ Marcar aula como concluída
+    <!-- Concluir aula -->
+    <button type="button" class="complete-button" (click)="completeLesson()">
 
-        }
+      @if (progress.isCompleted(lesson.id)) {
+      ✅ Aula concluída
+      } @else {
+      ✓ Marcar aula como concluída
+      }
 
+    </button>
+
+
+    <!-- Navegação entre aulas -->
+    <nav class="lesson-navigation">
+
+      @if (previousLesson) {
+
+      <button type="button" class="navigation-button" [routerLink]="['/lessons', previousLesson.id]">
+        ← Aula anterior
       </button>
 
-
-      <!-- Navegação -->
-      <nav class="lesson-navigation">
-
-        @if (previousLesson) {
-
-          <button
-            type="button"
-            class="navigation-button"
-            [routerLink]="['/lessons', previousLesson.id]"
-          >
-            ← Aula anterior
-          </button>
-
-        }
+      }
 
 
-        @if (nextLesson) {
+      @if (nextLesson) {
 
-          <button
-            type="button"
-            class="navigation-button primary-navigation"
-            [routerLink]="['/lessons', nextLesson.id]"
-          >
-            Próxima aula →
-          </button>
+      <button type="button" class="navigation-button primary-navigation" [routerLink]="['/lessons', nextLesson.id]">
+        Próxima aula →
+      </button>
 
-        }
+      }
 
-      </nav>
+    </nav>
 
     }
 

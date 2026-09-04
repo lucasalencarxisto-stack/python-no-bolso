@@ -209,49 +209,90 @@ textarea::selection {
 /* Console */
 
 .console {
-  background: #08110e;
+  margin-top: 0;
+
+  overflow: hidden;
+
+  background: #07110d;
 
   border-top: 1px solid #244638;
+
+  transition:
+    border-color 0.25s ease,
+    box-shadow 0.25s ease;
 }
 
+
+/* Quando existe uma saída real */
+
+.console.has-output {
+  border-color: #3b8d69;
+
+  box-shadow:
+    inset 0 0 0 1px rgba(84, 220, 161, 0.18);
+}
+
+
+/* Cabeçalho */
+
 .console-header {
-  min-height: 40px;
+  min-height: 54px;
 
   display: flex;
   align-items: center;
   justify-content: space-between;
 
-  padding: 0 15px;
+  gap: 12px;
+  padding: 10px 16px;
 
   background: #0c1813;
 
-  border-bottom: 1px solid #213b31;
+  border-bottom: 1px solid #234235;
 }
 
-.console-header > div {
+
+.console-title {
   display: flex;
   align-items: center;
 
-  gap: 8px;
+  gap: 10px;
 }
+
 
 .console-icon {
-  color: #63dda5;
+  color: #69e2aa;
 
   font-family: Consolas, monospace;
-  font-size: 13px;
+  font-size: 16px;
+  font-weight: 700;
 }
 
-.console-header strong {
-  color: #8dddb9;
 
-  font-size: 11px;
+.console-title strong {
+  display: block;
+
+  color: #9be6c3;
+
+  font-size: 12px;
 }
+
+
+.console-title small {
+  display: block;
+
+  margin-top: 2px;
+
+  color: #658476;
+
+  font-size: 9px;
+}
+
 
 .console-header button {
   padding: 5px 8px;
 
   background: transparent;
+
   color: #718b7e;
 
   border: 0;
@@ -261,26 +302,169 @@ textarea::selection {
   cursor: pointer;
 }
 
-.console-output {
-  min-height: 70px;
 
+/* Status */
+
+.console-status {
+  flex-shrink: 0;
+
+  padding: 5px 8px;
+
+  border-radius: 8px;
+
+  font-size: 9px;
+  font-weight: 700;
+}
+
+
+.console-status.running {
+  background: #282515;
+
+  color: #dac567;
+
+  border: 1px solid #504827;
+}
+
+
+.console-status.ready {
+  background: #123326;
+
+  color: #71e0ad;
+
+  border: 1px solid #285d45;
+}
+
+
+/* Corpo */
+
+.console-body {
+  min-height: 90px;
+
+  padding: 18px;
+
+  box-sizing: border-box;
+}
+
+
+/* Estado vazio */
+
+.output-placeholder {
+  min-height: 55px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 9px;
+
+  color: #61776d;
+
+  font-size: 12px;
+}
+
+
+.output-placeholder p {
   margin: 0;
-  padding: 16px 18px;
+}
 
-  overflow-x: auto;
 
-  color: #b7ead3;
+/* Resultado real */
+
+.output-result {
+  animation: output-arrive 0.28s ease-out;
+}
+
+
+.output-label {
+  display: inline-block;
+
+  margin-bottom: 9px;
+  padding: 4px 7px;
+
+  background: #153b2b;
+
+  color: #74e5b1;
+
+  border: 1px solid #286146;
+  border-radius: 6px;
+
+  font-size: 9px;
+  font-weight: 800;
+
+  letter-spacing: 1px;
+}
+
+
+.output-result pre {
+  margin: 0;
+
+  padding: 13px 15px;
+
+  background: #091811;
+
+  color: #d2f7e6;
+
+  border-left: 3px solid #55dba0;
+  border-radius: 7px;
 
   font-family:
     Consolas,
     "Courier New",
     monospace;
 
-  font-size: 13px;
+  font-size: 15px;
+  font-weight: 600;
+
   line-height: 1.65;
 
   white-space: pre-wrap;
   word-break: break-word;
+}
+
+.output-result pre {
+  margin: 0;
+
+  padding: 15px 17px;
+
+  background: #091811;
+
+  color: #d7f8e9;
+
+  border-left: 3px solid #55dba0;
+  border-radius: 8px;
+
+  font-family:
+    "Cascadia Code",
+    "Cascadia Mono",
+    "SFMono-Regular",
+    Consolas,
+    "Liberation Mono",
+    monospace;
+
+  font-size: 15px;
+  font-weight: 500;
+
+  line-height: 1.7;
+
+  letter-spacing: 0.15px;
+
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+
+@keyframes output-arrive {
+
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
 }
 
 /* Mobile */
@@ -303,4 +487,147 @@ textarea::selection {
     padding: 10px 13px;
   }
 
+}
+
+.challenge-feedback {
+  display: flex;
+  align-items: flex-start;
+
+  gap: 11px;
+  margin: 14px;
+  padding: 14px 16px;
+
+  border-radius: 12px;
+}
+
+.challenge-feedback > span {
+  flex-shrink: 0;
+
+  font-size: 20px;
+}
+
+.challenge-feedback strong {
+  display: block;
+
+  margin-bottom: 4px;
+
+  font-size: 13px;
+}
+
+.challenge-feedback p {
+  margin: 0;
+
+  font-size: 12px;
+  line-height: 1.55;
+}
+
+.challenge-feedback.success {
+  background: #10261d;
+
+  border: 1px solid #285440;
+}
+
+.challenge-feedback.success strong {
+  color: #79e0af;
+}
+
+.challenge-feedback.success p {
+  color: #9fc8b4;
+}
+
+.challenge-feedback.incorrect {
+  background: #292315;
+
+  border: 1px solid #5d4d27;
+}
+
+.challenge-feedback.incorrect strong {
+  color: #f1ca69;
+}
+
+.challenge-feedback.incorrect p {
+  color: #c7b98f;
+}
+
+.friendly-error {
+  margin: 14px;
+
+  padding: 16px;
+
+  background: #2a2115;
+
+  border: 1px solid #66502a;
+  border-radius: 12px;
+}
+
+.error-heading {
+  display: flex;
+  align-items: flex-start;
+
+  gap: 11px;
+}
+
+.error-heading > span {
+  flex-shrink: 0;
+
+  font-size: 20px;
+}
+
+.error-heading strong {
+  display: block;
+
+  margin-bottom: 6px;
+
+  color: #f0ca75;
+
+  font-size: 13px;
+}
+
+.error-heading p {
+  margin: 0;
+
+  color: #c9b88f;
+
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.technical-error {
+  margin-top: 14px;
+}
+
+.technical-error summary {
+  width: fit-content;
+
+  color: #9c8a68;
+
+  font-size: 11px;
+  font-weight: 600;
+
+  cursor: pointer;
+}
+
+.technical-error pre {
+  max-height: 180px;
+
+  margin: 12px 0 0;
+  padding: 12px;
+
+  overflow: auto;
+
+  background: #11100d;
+
+  border: 1px solid #423827;
+  border-radius: 9px;
+
+  color: #aa9c82;
+
+  font-family:
+    Consolas,
+    monospace;
+
+  font-size: 10px;
+  line-height: 1.5;
+
+  white-space: pre-wrap;
 }
