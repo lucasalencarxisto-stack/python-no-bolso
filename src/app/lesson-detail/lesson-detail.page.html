@@ -1,0 +1,288 @@
+<ion-content [fullscreen]="true">
+
+  <main class="lesson-container">
+
+    @if (lesson) {
+
+    <!-- Header -->
+    <header class="lesson-header">
+
+      <button type="button" class="back-button" (click)="goBack()" aria-label="Voltar para as aulas">
+        ←
+      </button>
+
+      <div class="lesson-heading">
+
+        <span class="badge">
+          {{ lesson.number }}
+        </span>
+
+        <h1>
+          {{ lesson.icon }} {{ lesson.title }}
+        </h1>
+
+        <p>
+          {{ lesson.description }}
+        </p>
+
+      </div>
+
+    </header>
+
+
+    <!-- Conteúdo da aula -->
+    <section class="lesson-content">
+
+      @for (block of lesson.content; track $index) {
+
+      @switch (block.type) {
+
+      <!-- Texto -->
+      @case ('text') {
+
+      <article class="content-card">
+
+        @if (block.title) {
+        <h2>{{ block.title }}</h2>
+        }
+
+        <p>{{ block.text }}</p>
+
+      </article>
+
+      }
+
+
+      <!-- Analogia -->
+      @case ('analogy') {
+
+      <article class="analogy-card">
+
+        @if (block.title) {
+        <h2>{{ block.title }}</h2>
+        }
+
+        <p>{{ block.text }}</p>
+
+      </article>
+
+      }
+
+
+      <!-- Lista -->
+      @case ('list') {
+
+      <article class="content-card">
+
+        @if (block.title) {
+        <h2>{{ block.title }}</h2>
+        }
+
+        <ul>
+
+          @for (item of block.items; track item) {
+          <li>{{ item }}</li>
+          }
+
+        </ul>
+
+      </article>
+
+      }
+
+
+      <!-- Código -->
+      @case ('code') {
+
+      <article class="code-card">
+
+        @if (block.title) {
+        <h2>{{ block.title }}</h2>
+        }
+
+        <div class="terminal">
+
+          <div class="terminal-header">
+
+            <div class="terminal-buttons">
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+
+            <span class="terminal-title">
+              python
+            </span>
+
+          </div>
+
+          <div class="terminal-body">
+
+            <span class="terminal-prompt">
+              &gt;&gt;&gt;
+            </span>
+
+            <pre><code>{{ block.code }}</code></pre>
+
+          </div>
+
+        </div>
+
+
+        @if (block.explanation) {
+
+        <p class="code-explanation">
+          {{ block.explanation }}
+        </p>
+
+        }
+
+
+        @if (block.output) {
+
+        <div class="output-box">
+
+          <span class="output-label">
+            SAÍDA
+          </span>
+
+          <pre>{{ block.output }}</pre>
+
+        </div>
+
+        }
+
+      </article>
+
+      }
+
+
+      <!-- Desafio -->
+      @case ('challenge') {
+
+      <article class="challenge-card">
+
+        @if (block.title) {
+        <h2>{{ block.title }}</h2>
+        }
+
+        <p class="challenge-description">
+          {{ block.description }}
+        </p>
+
+
+        @if (block.hint) {
+
+        <details class="hint">
+
+          <summary>
+            Ver dica
+          </summary>
+
+          <p>
+            {{ block.hint }}
+          </p>
+
+        </details>
+
+        }
+
+
+        <!-- Terminal interativo -->
+        <div class="challenge-terminal">
+
+    <app-python-terminal 
+      [initialCode]="block.starterCode || ''"
+      [expectedOutput]="block.expectedOutput"
+    ></app-python-terminal>
+
+        </div>
+
+      </article>
+
+      }
+
+
+      <!-- Dica -->
+      @case ('tip') {
+
+      <article class="tip-card">
+
+        <span>💡</span>
+
+        <p>
+          {{ block.text }}
+        </p>
+
+      </article>
+
+      }
+
+
+      <!-- Resumo -->
+      @case ('summary') {
+
+      <article class="summary-card">
+
+        <h2>
+          {{ block.title || 'Resumo da aula' }}
+        </h2>
+
+        <ul>
+
+          @for (item of block.items; track item) {
+          <li>{{ item }}</li>
+          }
+
+        </ul>
+
+      </article>
+
+      }
+
+      }
+
+      }
+
+    </section>
+
+
+    <!-- Concluir aula -->
+    <button type="button" class="complete-button" (click)="completeLesson()">
+
+      @if (progress.isCompleted(lesson.id)) {
+      ✅ Aula concluída
+      } @else {
+      ✓ Marcar aula como concluída
+      }
+
+    </button>
+
+
+    <!-- Navegação entre aulas -->
+    <nav class="lesson-navigation">
+
+      @if (previousLesson) {
+
+      <button type="button" class="navigation-button" [routerLink]="['/lessons', previousLesson.id]">
+        ← Aula anterior
+      </button>
+
+      }
+
+
+      @if (nextLesson) {
+
+      <button type="button" class="navigation-button primary-navigation" [routerLink]="['/lessons', nextLesson.id]">
+        Próxima aula →
+      </button>
+
+      }
+
+    </nav>
+
+    }
+
+  </main>
+
+</ion-content>
