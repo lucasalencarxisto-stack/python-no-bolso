@@ -21,6 +21,7 @@ import {
   PythonTerminalComponent
 } from '../components/python-terminal/python-terminal.component';
 
+
 @Component({
   selector: 'app-lesson-detail',
   templateUrl: './lesson-detail.page.html',
@@ -37,6 +38,9 @@ export class LessonDetailPage {
 
   lesson?: Lesson;
 
+  lessonCompleted = false;
+
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -49,16 +53,35 @@ export class LessonDetailPage {
         params.get('id')
       );
 
+
       this.lesson = LESSONS.find(
         lesson => lesson.id === id
       );
 
+
       if (!this.lesson) {
-        this.router.navigate(['/lessons']);
+
+        this.router.navigate([
+          '/lessons'
+        ]);
+
+        return;
       }
 
+
+      /*
+       * Carrega o progresso salvo
+       * quando a aula é aberta.
+       */
+      this.lessonCompleted =
+        this.progress.isCompleted(
+          this.lesson.id
+        );
+
     });
+
   }
+
 
   get previousLesson(): Lesson | undefined {
 
@@ -66,11 +89,15 @@ export class LessonDetailPage {
       return undefined;
     }
 
+
     return LESSONS.find(
       lesson =>
-        lesson.id === this.lesson!.id - 1
+        lesson.id ===
+        this.lesson!.id - 1
     );
+
   }
+
 
   get nextLesson(): Lesson | undefined {
 
@@ -78,11 +105,15 @@ export class LessonDetailPage {
       return undefined;
     }
 
+
     return LESSONS.find(
       lesson =>
-        lesson.id === this.lesson!.id + 1
+        lesson.id ===
+        this.lesson!.id + 1
     );
+
   }
+
 
   completeLesson(): void {
 
@@ -90,12 +121,30 @@ export class LessonDetailPage {
       return;
     }
 
+
+    /*
+     * Salva no localStorage.
+     */
     this.progress.completeLesson(
       this.lesson.id
     );
+
+
+    /*
+     * Atualiza a interface
+     * imediatamente.
+     */
+    this.lessonCompleted = true;
+
   }
 
+
   goBack(): void {
-    this.router.navigate(['/lessons']);
+
+    this.router.navigate([
+      '/lessons'
+    ]);
+
   }
+
 }

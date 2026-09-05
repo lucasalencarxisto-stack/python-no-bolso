@@ -1,280 +1,294 @@
 import {
-  ChangeDetectorRef,
-  Component,
-  Input,
-  OnInit
+    ChangeDetectorRef,
+    Component,
+    EventEmitter,
+    Input,
+    OnInit,
+    Output
 } from '@angular/core';
 
 import { FormsModule } from '@angular/forms';
 
 import {
-  PyodideService
+    PyodideService
 } from '../../services/pyodide.service';
 
 
 @Component({
-  selector: 'app-python-terminal',
-  templateUrl: './python-terminal.component.html',
-  styleUrls: ['./python-terminal.component.scss'],
-  standalone: true,
+    selector: 'app-python-terminal',
+    templateUrl: './python-terminal.component.html',
+    styleUrls: ['./python-terminal.component.scss'],
+    standalone: true,
 
-  imports: [
-    FormsModule
-  ]
+    imports: [
+        FormsModule
+    ]
 })
 export class PythonTerminalComponent implements OnInit {
 
-  @Input()
-  initialCode = '';
+    @Input()
+    initialCode = '';
 
-  @Input()
-  expectedOutput?: string;
-
-
-  code = '';
-
-  output = '';
-
-  isRunning = false;
+    @Input()
+    expectedOutput?: string;
 
 
-  challengeStatus:
-    'idle' |
-    'success' |
-    'incorrect' = 'idle';
+    code = '';
+
+    output = '';
+
+    isRunning = false;
 
 
-  friendlyError = '';
-
-  technicalError = '';
-
-
-  constructor(
-    private pyodideService: PyodideService,
-    private cdr: ChangeDetectorRef
-  ) {}
+    challengeStatus:
+        'idle' |
+        'success' |
+        'incorrect' = 'idle';
 
 
-  ngOnInit(): void {
-  this.code = this.initialCode;
-}
+    friendlyError = '';
+
+    technicalError = '';
+
+    @Output()
+    challengeCompleted = new EventEmitter<void>();
+
+    constructor(
+        private pyodideService: PyodideService,
+        private cdr: ChangeDetectorRef
+    ) { }
 
 
-  async runCode(): Promise<void> {
-
-    if (
-      !this.code.trim() ||
-      this.isRunning
-    ) {
-      return;
+    ngOnInit(): void {
+        this.code = this.initialCode;
     }
 
 
-    this.isRunning = true;
+    async runCode(): Promise<void> {
 
-    this.output = '';
-
-    this.challengeStatus = 'idle';
-
-    this.friendlyError = '';
-
-    this.technicalError = '';
-
-    this.cdr.detectChanges();
+        if (
+            !this.code.trim() ||
+            this.isRunning
+        ) {
+            return;
+        }
 
 
-    console.log(
-      '[Terminal] Iniciando execução:',
-      this.code
-    );
+        this.isRunning = true;
+
+        this.output = '';
+
+        this.challengeStatus = 'idle';
+
+        this.friendlyError = '';
+
+        this.technicalError = '';
+
+        this.cdr.detectChanges();
 
 
-    try {
-
-      const executionPromise =
-        this.pyodideService.run(
-          this.code
+        console.log(
+            '[Terminal] Iniciando execução:',
+            this.code
         );
 
 
-      const result =
-        await Promise.race([
+        try {
 
-          executionPromise,
-
-          new Promise<string>(
-            (_, reject) => {
-
-              setTimeout(() => {
-
-                reject(
-                  new Error(
-                    'A execução demorou mais de 10 segundos.'
-                  )
+            const executionPromise =
+                this.pyodideService.run(
+                    this.code
                 );
 
-              }, 10000);
 
-            }
-          )
+            const result =
+                await Promise.race([
 
-        ]);
+                    executionPromise,
 
+                    new Promise<string>(
+                        (_, reject) => {
 
-      const normalizedResult =
-        String(result ?? '').trim();
+                            setTimeout(() => {
 
+                                reject(
+                                    new Error(
+                                        'A execução demorou mais de 10 segundos.'
+                                    )
+                                );
 
-      this.output =
-        normalizedResult ||
-        '✓ Programa executado sem saída.';
+                            }, 10000);
 
+                        }
+                    )
 
-      this.validateChallenge(
-        normalizedResult
-      );
-
-    } catch (error) {
-
-      console.error(
-        '[Terminal] Erro:',
-        error
-      );
+                ]);
 
 
-      const errorMessage =
-        error instanceof Error
-          ? error.message
-          : String(error);
+            const normalizedResult =
+                String(result ?? '').trim();
 
 
-      this.technicalError =
-        errorMessage;
+            this.output =
+                normalizedResult ||
+                '✓ Programa executado sem saída.';
 
 
-      this.friendlyError =
-        this.translatePythonError();
+            this.validateChallenge(
+                normalizedResult
+            );
+
+        } catch (error) {
+
+            console.error(
+                '[Terminal] Erro:',
+                error
+            );
 
 
-      this.output = '';
+            const errorMessage =
+                error instanceof Error
+                    ? error.message
+                    : String(error);
 
-      this.challengeStatus = 'idle';
 
-    } finally {
+            this.technicalError =
+                errorMessage;
 
-      this.isRunning = false;
 
-      console.log(
-        '[Terminal] isRunning:',
-        this.isRunning
-      );
+            this.friendlyError =
+                this.translatePythonError();
 
-      this.cdr.detectChanges();
+
+            this.output = '';
+
+            this.challengeStatus = 'idle';
+
+        } finally {
+
+            this.isRunning = false;
+
+            console.log(
+                '[Terminal] isRunning:',
+                this.isRunning
+            );
+
+            this.cdr.detectChanges();
+
+        }
 
     }
 
-  }
+
+    private validateChallenge(
+        result: string
+    ): void {
+
+        if (
+            this.expectedOutput === undefined ||
+            this.expectedOutput === null
+        ) {
+
+            this.challengeStatus = 'idle';
+
+            return;
+
+        }
 
 
-  private validateChallenge(
-    result: string
-  ): void {
+        const actual =
+            this.normalizeOutput(
+                result
+            );
 
-    if (
-      this.expectedOutput === undefined ||
-      this.expectedOutput === null
-    ) {
 
-      this.challengeStatus = 'idle';
+        const expected =
+            this.normalizeOutput(
+                this.expectedOutput
+            );
 
-      return;
+
+        console.log(
+            '[Challenge] Esperado:',
+            expected
+        );
+
+
+        console.log(
+            '[Challenge] Recebido:',
+            actual
+        );
+
+
+        this.challengeStatus =
+            actual === expected
+                ? 'success'
+                : 'incorrect';
+        if (actual === expected) {
+
+            this.challengeStatus = 'success';
+
+            this.challengeCompleted.emit();
+
+        } else {
+
+            this.challengeStatus = 'incorrect';
+
+        }
+    }
+
+
+    private normalizeOutput(
+        value: string
+    ): string {
+
+        return value
+            .replace(/\r\n/g, '\n')
+            .trim();
 
     }
 
 
-    const actual =
-      this.normalizeOutput(
-        result
-      );
+    private translatePythonError(): string {
+
+        return (
+            'Parece que seu código tem alguma coisa para corrigir. ' +
+            'Revise a dica do exercício, confira o que você escreveu ' +
+            'e tente novamente.'
+        );
+
+    }
 
 
-    const expected =
-      this.normalizeOutput(
-        this.expectedOutput
-      );
+    clearOutput(): void {
+
+        this.output = '';
+
+        this.friendlyError = '';
+
+        this.technicalError = '';
+
+        this.challengeStatus = 'idle';
+
+        this.cdr.detectChanges();
+
+    }
 
 
-    console.log(
-      '[Challenge] Esperado:',
-      expected
-    );
+    resetCode(): void {
 
+        this.code = this.initialCode;
 
-    console.log(
-      '[Challenge] Recebido:',
-      actual
-    );
+        this.output = '';
 
+        this.friendlyError = '';
 
-    this.challengeStatus =
-      actual === expected
-        ? 'success'
-        : 'incorrect';
+        this.technicalError = '';
 
-  }
+        this.challengeStatus = 'idle';
 
+        this.cdr.detectChanges();
 
-  private normalizeOutput(
-    value: string
-  ): string {
-
-    return value
-      .replace(/\r\n/g, '\n')
-      .trim();
-
-  }
-
-
-  private translatePythonError(): string {
-
-    return (
-      'Parece que seu código tem alguma coisa para corrigir. ' +
-      'Revise a dica do exercício, confira o que você escreveu ' +
-      'e tente novamente.'
-    );
-
-  }
-
-
-  clearOutput(): void {
-
-    this.output = '';
-
-    this.friendlyError = '';
-
-    this.technicalError = '';
-
-    this.challengeStatus = 'idle';
-
-    this.cdr.detectChanges();
-
-  }
-
-
-  resetCode(): void {
-
-    this.code = this.initialCode;
-
-    this.output = '';
-
-    this.friendlyError = '';
-
-    this.technicalError = '';
-
-    this.challengeStatus = 'idle';
-
-    this.cdr.detectChanges();
-
-  }
+    }
 
 }
