@@ -279,34 +279,73 @@ ion-content {
 
 /* Concluir */
 
-.complete-button {
-  width: fit-content;
+.lesson-status {
+  display: flex;
+  align-items: flex-start;
 
-  display: block;
+  gap: 13px;
 
   margin: 26px auto 0;
-  padding: 14px 22px;
+  padding: 16px 18px;
 
-  background: #123b2b;
-  color: #79e0af;
+  background: #171d27;
 
-  border: 1px solid #286047;
-  border-radius: 12px;
+  border: 1px solid #313b4a;
+  border-radius: 14px;
 
-  font-size: 13px;
-  font-weight: 700;
-
-  cursor: pointer;
+  box-sizing: border-box;
 
   transition:
-    transform 0.2s ease,
-    background 0.2s ease;
+    background 0.25s ease,
+    border-color 0.25s ease,
+    transform 0.25s ease;
 }
 
-.complete-button:hover {
-  transform: translateY(-2px);
 
-  background: #174934;
+.lesson-status-icon {
+  flex-shrink: 0;
+
+  font-size: 22px;
+}
+
+
+.lesson-status strong {
+  display: block;
+
+  margin-bottom: 4px;
+
+  color: #c3ccd8;
+
+  font-size: 13px;
+}
+
+
+.lesson-status p {
+  margin: 0;
+
+  color: #7f8b9b;
+
+  font-size: 12px;
+  line-height: 1.55;
+}
+
+
+/* Aula concluída */
+
+.lesson-status.completed {
+  background: #10261d;
+
+  border-color: #285440;
+}
+
+
+.lesson-status.completed strong {
+  color: #79e0af;
+}
+
+
+.lesson-status.completed p {
+  color: #9fc8b4;
 }
 
 /* Navegação inferior */
