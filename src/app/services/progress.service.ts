@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -16,9 +17,11 @@ export class ProgressService {
         this.storageKey
       );
 
+
     if (!saved) {
       return [];
     }
+
 
     try {
 
@@ -34,6 +37,7 @@ export class ProgressService {
       return [];
 
     }
+
   }
 
 
@@ -45,6 +49,7 @@ export class ProgressService {
       this.storageKey,
       JSON.stringify(lessons)
     );
+
   }
 
 
@@ -55,6 +60,7 @@ export class ProgressService {
     return this
       .getCompletedLessons()
       .includes(lessonId);
+
   }
 
 
@@ -65,19 +71,23 @@ export class ProgressService {
     const completed =
       this.getCompletedLessons();
 
+
     if (
       completed.includes(lessonId)
     ) {
       return;
     }
 
+
     completed.push(
       lessonId
     );
 
+
     this.saveCompletedLessons(
       completed
     );
+
   }
 
 
@@ -86,6 +96,7 @@ export class ProgressService {
     return this
       .getCompletedLessons()
       .length;
+
   }
 
 }

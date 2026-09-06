@@ -37,10 +37,13 @@
       </header>
 
 
-      <!-- Conteúdo da aula -->
+      <!-- Conteúdo -->
       <section class="lesson-content">
 
-        @for (block of lesson.content; track $index) {
+        @for (
+          block of lesson.content;
+          track $index
+        ) {
 
           @switch (block.type) {
 
@@ -102,10 +105,12 @@
 
                 }
 
-
                 <ul>
 
-                  @for (item of block.items; track item) {
+                  @for (
+                    item of block.items;
+                    track item
+                  ) {
 
                     <li>
                       {{ item }}
@@ -228,7 +233,6 @@
                 }
 
 
-                <!-- Terminal interativo -->
                 <div class="challenge-terminal">
 
                   <app-python-terminal
@@ -271,10 +275,12 @@
                   {{ block.title || 'Resumo da aula' }}
                 </h2>
 
-
                 <ul>
 
-                  @for (item of block.items; track item) {
+                  @for (
+                    item of block.items;
+                    track item
+                  ) {
 
                     <li>
                       {{ item }}
@@ -295,7 +301,7 @@
       </section>
 
 
-      <!-- Status da aula -->
+      <!-- Status -->
       <section
         class="lesson-status"
         [class.completed]="lessonCompleted"
@@ -343,7 +349,7 @@
       </section>
 
 
-      <!-- Navegação entre aulas -->
+      <!-- Navegação -->
       <nav class="lesson-navigation">
 
         @if (previousLesson) {
