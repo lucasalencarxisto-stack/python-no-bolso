@@ -9,10 +9,7 @@ import {
   IonContent
 } from '@ionic/angular';
 
-import {
-  ProgressService
-} from '../services/progress.service';
-
+import { ProgressService } from '../services/progress.service';
 
 @Component({
   selector: 'app-home',
@@ -20,20 +17,35 @@ import {
   styleUrls: ['./home.page.scss'],
   standalone: true,
 
-  imports: [
-    IonContent,
-    RouterLink
+  imports: [IonContent, RouterLink
   ]
 })
 export class HomePage {
 
   quizMessageVisible = false;
 
+  menuOpen = false;
+
 
   constructor(
     private router: Router,
     public progress: ProgressService
   ) {}
+
+
+  toggleMenu(): void {
+
+    this.menuOpen =
+      !this.menuOpen;
+
+  }
+
+
+  closeMenu(): void {
+
+    this.menuOpen = false;
+
+  }
 
 
   openQuiz(): void {

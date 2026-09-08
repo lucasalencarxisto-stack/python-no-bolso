@@ -49,6 +49,13 @@ export const routes: Routes = [
     path: '',
     redirectTo: 'home',
     pathMatch: 'full'
-  }
+  },
+
+  {
+  path: 'resources',
+  loadComponent: () =>
+    import('./resources/resources.page')
+      .then(m => m.ResourcesPage)
+},
 
 ];
