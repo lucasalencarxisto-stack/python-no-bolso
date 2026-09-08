@@ -1,0 +1,191 @@
+<ion-content [fullscreen]="true">
+
+  <main class="lab-container">
+
+    <!-- Header -->
+    <header class="lab-header">
+
+      <button
+        type="button"
+        class="back-button"
+        routerLink="/home"
+        aria-label="Voltar ao menu inicial"
+      >
+        ←
+      </button>
+
+
+      <div>
+
+        <span class="badge">
+          LABORATÓRIO
+        </span>
+
+        <h1>
+          Experimente Python
+        </h1>
+
+        <p>
+          Um espaço livre para testar códigos,
+          ideias e experiências.
+        </p>
+
+      </div>
+
+    </header>
+
+
+    <!-- Mascote -->
+    <section class="mascot-section">
+
+      <div class="mascot">
+
+        <!--
+          Por enquanto usamos o emoji.
+
+          Depois trocamos pela imagem
+          da nossa cobrinha nerd.
+        -->
+        <span class="mascot-placeholder">
+          🐍
+        </span>
+
+      </div>
+
+
+      <div class="speech-bubble">
+
+        <span class="speech-title">
+          Olá, programador! 👋
+        </span>
+
+        <p>
+          Bem-vindo ao Laboratório!
+          Este é um espaço livre para testar
+          os códigos que você aprendeu nas aulas
+          ou experimentar coisas novas.
+        </p>
+
+        <p>
+          Escreva seu código abaixo e aperte
+          <strong>Executar</strong>.
+        </p>
+
+      </div>
+
+    </section>
+
+
+    <!-- Aviso -->
+    <section class="lab-info">
+
+      <span>
+        💡
+      </span>
+
+      <p>
+        Aqui não existe resposta certa ou errada.
+        Você pode alterar o código livremente
+        e executar quantas vezes quiser.
+      </p>
+
+    </section>
+
+
+    <!-- Terminal -->
+    <section class="lab-terminal">
+
+      <div class="terminal-heading">
+
+        <div>
+
+          <span class="terminal-label">
+            PLAYGROUND
+          </span>
+
+          <h2>
+            Terminal Python
+          </h2>
+
+        </div>
+
+        <span class="terminal-status">
+          ● Python
+        </span>
+
+      </div>
+
+
+      <app-python-terminal
+        [initialCode]="initialCode"
+      ></app-python-terminal>
+
+    </section>
+
+
+    <!-- Ideias -->
+    <section class="ideas-card">
+
+      <span class="ideas-label">
+        SEM IDEIAS?
+      </span>
+
+      <h2>
+        Experimente criar algo
+      </h2>
+
+
+      <div class="idea-list">
+
+        <div class="idea">
+          <span>🧮</span>
+          <p>
+            Faça cálculos usando números e variáveis
+          </p>
+        </div>
+
+
+        <div class="idea">
+          <span>📦</span>
+          <p>
+            Crie variáveis e mostre seus valores
+          </p>
+        </div>
+
+
+        <div class="idea">
+          <span>🔁</span>
+          <p>
+            Experimente loops como
+            <code>for</code> e <code>while</code>
+          </p>
+        </div>
+
+
+        <div class="idea">
+          <span>🧠</span>
+          <p>
+            Crie decisões usando
+            <code>if</code> e <code>else</code>
+          </p>
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <footer class="lab-footer">
+
+      <span>
+        🐍
+      </span>
+
+      Continue experimentando.
+      Programação se aprende programando.
+
+    </footer>
+
+  </main>
+
+</ion-content>
