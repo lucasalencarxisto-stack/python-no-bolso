@@ -1,0 +1,138 @@
+ion-content {
+  --background: #090d14;
+}
+
+
+.complete-container {
+  max-width: 520px;
+
+  margin: 0 auto;
+  padding: 48px 24px;
+}
+
+
+.celebration {
+  text-align: center;
+}
+
+
+.trophy {
+  margin-bottom: 18px;
+
+  font-size: 64px;
+}
+
+
+.badge {
+  display: inline-block;
+
+  margin-bottom: 12px;
+
+  color: #519cff;
+
+  font-size: 11px;
+  font-weight: 800;
+
+  letter-spacing: 1.4px;
+}
+
+
+h1 {
+  margin: 0 0 12px;
+
+  color: #f4f7fb;
+
+  font-size: 34px;
+}
+
+
+.celebration p {
+  margin: 0;
+
+  color: #91a0b4;
+
+  line-height: 1.6;
+}
+
+
+.unlock-card {
+  display: flex;
+
+  gap: 15px;
+
+  margin-top: 38px;
+  padding: 20px;
+
+  background: #121924;
+
+  border: 1px solid #285440;
+  border-radius: 16px;
+}
+
+
+.unlock-icon {
+  font-size: 30px;
+}
+
+
+.unlock-card small {
+  color: #68dca6;
+
+  font-size: 9px;
+  font-weight: 800;
+
+  letter-spacing: 1px;
+}
+
+
+.unlock-card h2 {
+  margin: 7px 0;
+
+  color: #f4f7fb;
+
+  font-size: 18px;
+}
+
+
+.unlock-card p {
+  margin: 0;
+
+  color: #91a0b4;
+
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+
+.quiz-button,
+.home-button {
+  width: 100%;
+
+  padding: 15px;
+
+  border-radius: 12px;
+
+  font-weight: 800;
+
+  cursor: pointer;
+}
+
+
+.quiz-button {
+  margin-top: 24px;
+
+  background: #1c5fa5;
+  color: white;
+
+  border: 1px solid #4d9fff;
+}
+
+
+.home-button {
+  margin-top: 10px;
+
+  background: transparent;
+  color: #91a0b4;
+
+  border: 1px solid #283346;
+}

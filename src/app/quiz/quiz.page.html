@@ -1,0 +1,181 @@
+<ion-content [fullscreen]="true">
+
+  <main class="quiz-container">
+
+    <header class="quiz-header">
+
+      <button
+        type="button"
+        class="back-button"
+        routerLink="/home"
+      >
+        ←
+      </button>
+
+      <div>
+
+        <span class="badge">
+          QUIZ DE PYTHON
+        </span>
+
+        <h1>
+          Teste seus conhecimentos
+        </h1>
+
+      </div>
+
+    </header>
+
+
+    @if (!finished) {
+
+      <div class="progress">
+        Questão
+        {{ currentIndex + 1 }}
+        de
+        {{ questions.length }}
+      </div>
+
+
+      <section class="question-card">
+
+        <h2>
+          {{ currentQuestion.question }}
+        </h2>
+
+
+        <div class="answers">
+
+          @for (
+            option of currentQuestion.options;
+            track $index
+          ) {
+
+            <button
+              type="button"
+              class="answer-button"
+              [class.correct]="
+                answered &&
+                $index === currentQuestion.answer
+              "
+              [class.wrong]="
+                answered &&
+                selectedIndex === $index &&
+                $index !== currentQuestion.answer
+              "
+              [disabled]="answered"
+              (click)="selectAnswer($index)"
+            >
+              {{ option }}
+            </button>
+
+          }
+
+        </div>
+
+
+        @if (answered) {
+
+          <div
+            class="feedback"
+            [class.success]="
+              selectedIndex ===
+              currentQuestion.answer
+            "
+          >
+
+            @if (
+              selectedIndex ===
+              currentQuestion.answer
+            ) {
+
+              <strong>
+                ✅ Resposta correta!
+              </strong>
+
+            } @else {
+
+              <strong>
+                💡 Quase!
+              </strong>
+
+            }
+
+
+            <p>
+              {{ currentQuestion.explanation }}
+            </p>
+
+          </div>
+
+
+          <button
+            type="button"
+            class="next-button"
+            (click)="nextQuestion()"
+          >
+
+            @if (
+              currentIndex ===
+              questions.length - 1
+            ) {
+
+              Ver resultado →
+
+            } @else {
+
+              Próxima questão →
+
+            }
+
+          </button>
+
+        }
+
+      </section>
+
+    } @else {
+
+      <section class="result-card">
+
+        <span class="result-icon">
+          🏆
+        </span>
+
+        <span class="badge">
+          RESULTADO
+        </span>
+
+        <h1>
+          {{ score }}/{{ questions.length }}
+        </h1>
+
+        <p>
+          Você concluiu o Quiz de Python!
+        </p>
+
+
+        <button
+          type="button"
+          class="next-button"
+          (click)="restartQuiz()"
+        >
+          🔄 Tentar novamente
+        </button>
+
+
+        <button
+          type="button"
+          class="home-button"
+          routerLink="/home"
+        >
+          Voltar ao menu
+        </button>
+
+      </section>
+
+    }
+
+  </main>
+
+</ion-content>

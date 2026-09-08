@@ -151,3 +151,51 @@ footer {
   font-size: 12px;
   text-align: center;
 }
+
+.menu-card.locked {
+  opacity: 0.65;
+}
+
+
+.locked-message {
+  position: fixed;
+
+  left: 50%;
+  bottom: 28px;
+
+  z-index: 1000;
+
+  display: flex;
+
+  width: calc(100% - 40px);
+  max-width: 480px;
+
+  padding: 15px;
+
+  gap: 12px;
+
+  background: #171e2b;
+
+  border: 1px solid #36547a;
+  border-radius: 14px;
+
+  transform: translateX(-50%);
+
+  box-shadow:
+    0 12px 35px
+    rgba(0, 0, 0, 0.4);
+}
+
+
+.locked-message strong {
+  color: #f1f6ff;
+}
+
+
+.locked-message p {
+  margin: 4px 0 0;
+
+  color: #91a0b4;
+
+  font-size: 12px;
+}

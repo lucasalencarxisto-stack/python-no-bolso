@@ -644,3 +644,65 @@ ion-content {
 .practice-section {
   margin-top: 20px;
 }
+
+.course-finish {
+  margin-top: 18px;
+  padding: 20px;
+
+  background: #171e2b;
+
+  border: 1px solid #36547a;
+  border-radius: 16px;
+}
+
+.course-finish-content {
+  display: flex;
+  align-items: flex-start;
+  gap: 13px;
+}
+
+.course-finish-icon {
+  flex-shrink: 0;
+  font-size: 26px;
+}
+
+.course-finish strong {
+  display: block;
+
+  margin-bottom: 5px;
+
+  color: #e8f2ff;
+
+  font-size: 15px;
+}
+
+.course-finish p {
+  margin: 0;
+
+  color: #91a0b4;
+
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.finish-course-button {
+  width: 100%;
+
+  margin-top: 17px;
+  padding: 14px 18px;
+
+  background: #1c5fa5;
+  color: #ffffff;
+
+  border: 1px solid #4d9fff;
+  border-radius: 12px;
+
+  font-size: 13px;
+  font-weight: 800;
+
+  cursor: pointer;
+}
+
+.finish-course-button:hover {
+  background: #2572bd;
+}
