@@ -349,7 +349,7 @@
       </section>
 
 
-      <!-- Navegação -->
+           <!-- Navegação entre aulas -->
       <nav class="lesson-navigation">
 
         @if (previousLesson) {
@@ -357,10 +357,7 @@
           <button
             type="button"
             class="navigation-button"
-            [routerLink]="[
-              '/lessons',
-              previousLesson.id
-            ]"
+            [routerLink]="['/lessons', previousLesson.id]"
           >
             ← Aula anterior
           </button>
@@ -370,16 +367,28 @@
 
         @if (nextLesson) {
 
-          <button
-            type="button"
-            class="navigation-button primary-navigation"
-            [routerLink]="[
-              '/lessons',
-              nextLesson.id
-            ]"
-          >
-            Próxima aula →
-          </button>
+          @if (lessonCompleted) {
+
+            <button
+              type="button"
+              class="navigation-button primary-navigation"
+              [routerLink]="['/lessons', nextLesson.id]"
+            >
+              Próxima aula →
+            </button>
+
+          } @else {
+
+            <button
+              type="button"
+              class="navigation-button locked-navigation"
+              disabled
+              aria-label="Complete o desafio para liberar a próxima aula"
+            >
+              🔒 Próxima aula
+            </button>
+
+          }
 
         }
 
