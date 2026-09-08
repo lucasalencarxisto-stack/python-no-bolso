@@ -54,12 +54,13 @@ export class LessonDetailPage {
       );
 
 
-      this.lesson = LESSONS.find(
+      const foundLesson = LESSONS.find(
         lesson => lesson.id === id
       );
 
 
-      if (!this.lesson) {
+      // Aula inexistente
+      if (!foundLesson) {
 
         this.router.navigate([
           '/lessons'
@@ -70,9 +71,30 @@ export class LessonDetailPage {
 
 
       /*
-       * Carrega o progresso salvo
-       * quando a aula é aberta.
+       * A Aula 01 sempre pode ser acessada.
+       *
+       * Para qualquer outra aula,
+       * a anterior precisa estar concluída.
        */
+      if (
+        foundLesson.id > 1 &&
+        !this.progress.isCompleted(
+          foundLesson.id - 1
+        )
+      ) {
+
+        this.router.navigate([
+          '/lessons'
+        ]);
+
+        return;
+      }
+
+
+      this.lesson = foundLesson;
+
+
+      // Recupera o progresso salvo
       this.lessonCompleted =
         this.progress.isCompleted(
           this.lesson.id
@@ -89,7 +111,6 @@ export class LessonDetailPage {
       return undefined;
     }
 
-
     return LESSONS.find(
       lesson =>
         lesson.id ===
@@ -104,7 +125,6 @@ export class LessonDetailPage {
     if (!this.lesson) {
       return undefined;
     }
-
 
     return LESSONS.find(
       lesson =>
@@ -122,18 +142,11 @@ export class LessonDetailPage {
     }
 
 
-    /*
-     * Salva no localStorage.
-     */
     this.progress.completeLesson(
       this.lesson.id
     );
 
 
-    /*
-     * Atualiza a interface
-     * imediatamente.
-     */
     this.lessonCompleted = true;
 
   }
