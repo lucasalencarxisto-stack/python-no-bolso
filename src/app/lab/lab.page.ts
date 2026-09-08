@@ -22,11 +22,11 @@ import {
 export class LabPage {
 
   initialCode =
-`# Bem-vindo ao Laboratório 🐍
+`# Laboratório Python 🐍
 
-nome = "Python no Bolso"
+mensagem = "Python no Bolso"
 
-print("Olá,", nome)
+print(mensagem)
 `;
 
 }

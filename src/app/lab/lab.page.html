@@ -9,13 +9,13 @@
         type="button"
         class="back-button"
         routerLink="/home"
-        aria-label="Voltar ao menu inicial"
+        aria-label="Voltar ao menu"
       >
         ←
       </button>
 
 
-      <div>
+      <div class="lab-heading">
 
         <span class="badge">
           LABORATÓRIO
@@ -26,8 +26,8 @@
         </h1>
 
         <p>
-          Um espaço livre para testar códigos,
-          ideias e experiências.
+          Teste códigos livremente e coloque
+          seus conhecimentos em prática.
         </p>
 
       </div>
@@ -36,15 +36,13 @@
 
 
     <!-- Mascote -->
-    <section class="mascot-section">
+    <section class="mascot-area">
 
-      <div class="mascot">
+      <div class="mascot-box">
 
         <!--
-          Por enquanto usamos o emoji.
-
-          Depois trocamos pela imagem
-          da nossa cobrinha nerd.
+          Depois substituímos pelo nosso
+          mascote definitivo.
         -->
         <span class="mascot-placeholder">
           🐍
@@ -55,20 +53,20 @@
 
       <div class="speech-bubble">
 
-        <span class="speech-title">
-          Olá, programador! 👋
-        </span>
+        <strong>
+          E aí, programador! 👋
+        </strong>
 
         <p>
           Bem-vindo ao Laboratório!
-          Este é um espaço livre para testar
-          os códigos que você aprendeu nas aulas
-          ou experimentar coisas novas.
+          Aqui você pode testar os códigos
+          que aprendeu nas aulas ou experimentar
+          coisas completamente novas.
         </p>
 
         <p>
-          Escreva seu código abaixo e aperte
-          <strong>Executar</strong>.
+          Não existe resposta certa ou errada.
+          Escreva seu código e mande executar!
         </p>
 
       </div>
@@ -76,30 +74,30 @@
     </section>
 
 
-    <!-- Aviso -->
-    <section class="lab-info">
+    <!-- Explicação -->
+    <section class="lab-tip">
 
       <span>
         💡
       </span>
 
       <p>
-        Aqui não existe resposta certa ou errada.
-        Você pode alterar o código livremente
+        Este terminal executa Python diretamente
+        no aplicativo. Você pode alterar o código
         e executar quantas vezes quiser.
       </p>
 
     </section>
 
 
-    <!-- Terminal -->
-    <section class="lab-terminal">
+    <!-- Playground -->
+    <section class="playground">
 
-      <div class="terminal-heading">
+      <header class="playground-header">
 
         <div>
 
-          <span class="terminal-label">
+          <span class="playground-label">
             PLAYGROUND
           </span>
 
@@ -109,11 +107,12 @@
 
         </div>
 
-        <span class="terminal-status">
+
+        <span class="python-status">
           ● Python
         </span>
 
-      </div>
+      </header>
 
 
       <app-python-terminal
@@ -127,47 +126,101 @@
     <section class="ideas-card">
 
       <span class="ideas-label">
-        SEM IDEIAS?
+        NÃO SABE O QUE TESTAR?
       </span>
 
       <h2>
-        Experimente criar algo
+        Algumas ideias
       </h2>
 
 
-      <div class="idea-list">
+      <div class="ideas">
 
-        <div class="idea">
-          <span>🧮</span>
-          <p>
-            Faça cálculos usando números e variáveis
-          </p>
+        <div class="idea-item">
+
+          <span class="idea-icon">
+            📦
+          </span>
+
+          <div>
+
+            <strong>
+              Variáveis
+            </strong>
+
+            <p>
+              Crie informações e mostre
+              seus valores com print().
+            </p>
+
+          </div>
+
         </div>
 
 
-        <div class="idea">
-          <span>📦</span>
-          <p>
-            Crie variáveis e mostre seus valores
-          </p>
+        <div class="idea-item">
+
+          <span class="idea-icon">
+            🧮
+          </span>
+
+          <div>
+
+            <strong>
+              Cálculos
+            </strong>
+
+            <p>
+              Experimente operações como
+              +, -, * e /.
+            </p>
+
+          </div>
+
         </div>
 
 
-        <div class="idea">
-          <span>🔁</span>
-          <p>
-            Experimente loops como
-            <code>for</code> e <code>while</code>
-          </p>
+        <div class="idea-item">
+
+          <span class="idea-icon">
+            🔁
+          </span>
+
+          <div>
+
+            <strong>
+              Repetições
+            </strong>
+
+            <p>
+              Teste estruturas como
+              for e while.
+            </p>
+
+          </div>
+
         </div>
 
 
-        <div class="idea">
-          <span>🧠</span>
-          <p>
-            Crie decisões usando
-            <code>if</code> e <code>else</code>
-          </p>
+        <div class="idea-item">
+
+          <span class="idea-icon">
+            🧠
+          </span>
+
+          <div>
+
+            <strong>
+              Condições
+            </strong>
+
+            <p>
+              Faça decisões usando
+              if e else.
+            </p>
+
+          </div>
+
         </div>
 
       </div>
@@ -181,8 +234,10 @@
         🐍
       </span>
 
-      Continue experimentando.
-      Programação se aprende programando.
+      <p>
+        Continue experimentando.
+        Programação se aprende programando.
+      </p>
 
     </footer>
 
