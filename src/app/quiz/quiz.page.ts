@@ -52,6 +52,7 @@ export class QuizPage {
         'A função print() é usada para mostrar informações na saída do programa.'
     },
 
+
     {
       question:
         'Qual código cria corretamente uma variável chamada nome?',
@@ -68,6 +69,7 @@ export class QuizPage {
       explanation:
         'Em Python usamos = para atribuir um valor a uma variável.'
     },
+
 
     {
       question:
@@ -86,6 +88,7 @@ export class QuizPage {
         'int representa números inteiros, como 10, 25 ou -3.'
     },
 
+
     {
       question:
         'Qual função é usada para receber uma entrada do usuário?',
@@ -103,6 +106,7 @@ export class QuizPage {
         'input() permite receber uma informação digitada pelo usuário.'
     },
 
+
     {
       question:
         'Qual palavra inicia uma condição em Python?',
@@ -119,6 +123,7 @@ export class QuizPage {
       explanation:
         'A palavra-chave if inicia uma condição.'
     },
+
 
     {
       question:
@@ -173,6 +178,9 @@ export class QuizPage {
   }
 
 
+  /*
+   * Pergunta atual.
+   */
   get currentQuestion(): QuizQuestion {
 
     return this.questions[
@@ -182,18 +190,174 @@ export class QuizPage {
   }
 
 
+  /*
+   * Porcentagem final.
+   */
+  get percentage(): number {
+
+    if (
+      this.questions.length === 0
+    ) {
+      return 0;
+    }
+
+
+    return Math.round(
+      (
+        this.score /
+        this.questions.length
+      ) * 100
+    );
+
+  }
+
+
+  /*
+   * Quantidade de erros.
+   */
+  get errors(): number {
+
+    return (
+      this.questions.length -
+      this.score
+    );
+
+  }
+
+
+  /*
+   * Emoji exibido de acordo
+   * com o desempenho.
+   */
+  get resultEmoji(): string {
+
+    if (
+      this.percentage === 100
+    ) {
+      return '🏆';
+    }
+
+
+    if (
+      this.percentage >= 70
+    ) {
+      return '🎉';
+    }
+
+
+    if (
+      this.percentage > 50
+    ) {
+      return '📚';
+    }
+
+
+    return '💪';
+
+  }
+
+
+  /*
+   * Título do resultado.
+   */
+  get resultTitle(): string {
+
+    if (
+      this.percentage === 100
+    ) {
+      return 'Perfeito!';
+    }
+
+
+    if (
+      this.percentage >= 70
+    ) {
+      return 'Muito bem!';
+    }
+
+
+    if (
+      this.percentage > 50
+    ) {
+      return 'Bom progresso!';
+    }
+
+
+    return 'Continue praticando!';
+
+  }
+
+
+  /*
+   * Mensagem final personalizada
+   * conforme a pontuação.
+   */
+  get resultMessage(): string {
+
+    if (
+      this.percentage === 100
+    ) {
+
+      return (
+        'Você dominou os fundamentos desta trilha. ' +
+        'Excelente trabalho!'
+      );
+
+    }
+
+
+    if (
+      this.percentage >= 70
+    ) {
+
+      return (
+        'Você tem uma boa base em Python. ' +
+        'Continue praticando!'
+      );
+
+    }
+
+
+    if (
+      this.percentage > 50
+    ) {
+
+      return (
+        'Você está no caminho certo. ' +
+        'Reveja alguns conceitos e tente novamente.'
+      );
+
+    }
+
+
+    return (
+      'Continue praticando e reveja as aulas. ' +
+      'Cada tentativa ajuda você a evoluir!'
+    );
+
+  }
+
+
+  /*
+   * Seleciona uma resposta.
+   */
   selectAnswer(
     index: number
   ): void {
 
-    if (this.answered) {
+    if (
+      this.answered
+    ) {
       return;
     }
 
 
-    this.selectedIndex = index;
+    this.selectedIndex =
+      index;
 
-    this.answered = true;
+
+    this.answered =
+      true;
 
 
     if (
@@ -208,6 +372,10 @@ export class QuizPage {
   }
 
 
+  /*
+   * Avança para a próxima
+   * questão ou encerra o Quiz.
+   */
   nextQuestion(): void {
 
     if (
@@ -224,13 +392,21 @@ export class QuizPage {
 
     this.currentIndex++;
 
-    this.selectedIndex = null;
 
-    this.answered = false;
+    this.selectedIndex =
+      null;
+
+
+    this.answered =
+      false;
 
   }
 
 
+  /*
+   * Reinicia completamente
+   * o Quiz.
+   */
   restartQuiz(): void {
 
     this.currentIndex = 0;

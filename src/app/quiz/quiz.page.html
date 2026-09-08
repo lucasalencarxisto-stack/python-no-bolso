@@ -2,17 +2,17 @@
 
   <main class="quiz-container">
 
+    <!-- =====================================================
+         HEADER
+         ===================================================== -->
     <header class="quiz-header">
 
-      <button
-        type="button"
-        class="back-button"
-        routerLink="/home"
-      >
+      <button type="button" class="back-button" routerLink="/home" aria-label="Voltar ao menu inicial">
         ←
       </button>
 
-      <div>
+
+      <div class="quiz-heading">
 
         <span class="badge">
           QUIZ DE PYTHON
@@ -22,157 +22,330 @@
           Teste seus conhecimentos
         </h1>
 
+        <p>
+          Veja o quanto você aprendeu durante a trilha.
+        </p>
+
       </div>
 
     </header>
 
 
+    <!-- =====================================================
+         QUIZ EM ANDAMENTO
+         ===================================================== -->
     @if (!finished) {
 
-      <div class="progress">
-        Questão
-        {{ currentIndex + 1 }}
-        de
-        {{ questions.length }}
+    <section class="quiz-progress">
+
+      <div class="progress-info">
+
+        <span>
+          QUESTÃO {{ currentIndex + 1 }}
+        </span>
+
+        <span>
+          {{ currentIndex + 1 }}/{{ questions.length }}
+        </span>
+
       </div>
 
 
-      <section class="question-card">
+      <div class="progress-track">
 
-        <h2>
-          {{ currentQuestion.question }}
-        </h2>
+        <div class="progress-value" [style.width.%]="
+              ((currentIndex + 1) / questions.length) * 100
+            "></div>
+
+      </div>
+
+    </section>
 
 
-        <div class="answers">
+    <section class="question-card">
 
-          @for (
-            option of currentQuestion.options;
-            track $index
-          ) {
+      <span class="question-label">
+        ESCOLHA UMA RESPOSTA
+      </span>
 
-            <button
-              type="button"
-              class="answer-button"
-              [class.correct]="
+
+      <h2>
+        {{ currentQuestion.question }}
+      </h2>
+
+
+      <!-- Respostas -->
+      <div class="answers">
+
+        @for (
+        option of currentQuestion.options;
+        track $index
+        ) {
+
+        <button type="button" class="answer-button" [class.correct]="
                 answered &&
                 $index === currentQuestion.answer
-              "
-              [class.wrong]="
+              " [class.wrong]="
                 answered &&
                 selectedIndex === $index &&
                 $index !== currentQuestion.answer
-              "
-              [disabled]="answered"
-              (click)="selectAnswer($index)"
-            >
-              {{ option }}
-            </button>
+              " [disabled]="answered" (click)="selectAnswer($index)">
+
+          <span class="answer-letter">
+
+            @switch ($index) {
+
+            @case (0) {
+            A
+            }
+
+            @case (1) {
+            B
+            }
+
+            @case (2) {
+            C
+            }
+
+            @case (3) {
+            D
+            }
+
+            }
+
+          </span>
+
+
+          <span class="answer-text">
+            {{ option }}
+          </span>
+
+
+          @if (
+          answered &&
+          $index === currentQuestion.answer
+          ) {
+
+          <span class="answer-state">
+            ✓
+          </span>
 
           }
+
+
+          @if (
+          answered &&
+          selectedIndex === $index &&
+          $index !== currentQuestion.answer
+          ) {
+
+          <span class="answer-state">
+            ×
+          </span>
+
+          }
+
+        </button>
+
+        }
+
+      </div>
+
+
+      <!-- Feedback -->
+      @if (answered) {
+
+      <div class="feedback" [class.success]="
+              selectedIndex ===
+              currentQuestion.answer
+            ">
+
+        <span class="feedback-icon">
+
+          @if (
+          selectedIndex ===
+          currentQuestion.answer
+          ) {
+          ✅
+          } @else {
+          💡
+          }
+
+        </span>
+
+
+        <div>
+
+          @if (
+          selectedIndex ===
+          currentQuestion.answer
+          ) {
+
+          <strong>
+            Resposta correta!
+          </strong>
+
+          } @else {
+
+          <strong>
+            Quase!
+          </strong>
+
+          }
+
+
+          <p>
+            {{ currentQuestion.explanation }}
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <button type="button" class="next-button" (click)="nextQuestion()">
+
+        @if (
+        currentIndex ===
+        questions.length - 1
+        ) {
+
+        Ver resultado →
+
+        } @else {
+
+        Próxima questão →
+
+        }
+
+      </button>
+
+      }
+
+    </section>
+
+    }
+
+
+    <!-- =====================================================
+         RESULTADO FINAL
+         ===================================================== -->
+    @else {
+
+    <section class="result-card">
+
+      <!-- Emoji baseado no desempenho -->
+      <div class="result-emoji">
+        {{ resultEmoji }}
+      </div>
+
+
+      <!-- Gráfico circular -->
+      <div class="score-circle" [class.low-score]="percentage < 50" [class.medium-score]="
+            percentage >= 50 &&
+            percentage <= 70
+           " [class.high-score]="percentage >= 71">
+
+        <svg class="progress-ring" viewBox="0 0 120 120" aria-hidden="true">
+
+          <circle class="progress-ring-background" cx="60" cy="60" r="50" pathLength="100"></circle>
+
+
+          <circle class="progress-ring-value" cx="60" cy="60" r="50" pathLength="100" stroke-dasharray="100"
+            [attr.stroke-dashoffset]="100 - percentage"></circle>
+
+        </svg>
+
+
+        <div class="percentage">
+
+          <strong>
+            {{ percentage }}%
+          </strong>
+
+          <small>
+            {{ score }}/{{ questions.length }}
+          </small>
+
+        </div>
+
+      </div>
+
+
+      <!-- Resultado textual -->
+      <div class="result-heading">
+
+        <h2>
+          {{ resultTitle }}
+        </h2>
+
+        <p>
+          {{ resultMessage }}
+        </p>
+
+      </div>
+
+
+      <!-- Estatísticas -->
+      <div class="result-stats">
+
+        <div class="stat">
+
+          <strong class="correct-stat">
+            {{ score }}
+          </strong>
+
+          <span>
+            Acertos
+          </span>
 
         </div>
 
 
-        @if (answered) {
+        <div class="stat">
 
-          <div
-            class="feedback"
-            [class.success]="
-              selectedIndex ===
-              currentQuestion.answer
-            "
-          >
+          <strong class="error-stat">
+            {{ errors }}
+          </strong>
 
-            @if (
-              selectedIndex ===
-              currentQuestion.answer
-            ) {
+          <span>
+            Erros
+          </span>
 
-              <strong>
-                ✅ Resposta correta!
-              </strong>
-
-            } @else {
-
-              <strong>
-                💡 Quase!
-              </strong>
-
-            }
+        </div>
 
 
-            <p>
-              {{ currentQuestion.explanation }}
-            </p>
+        <div class="stat">
 
-          </div>
+          <strong class="total-stat">
+            {{ questions.length }}
+          </strong>
 
+          <span>
+            Total
+          </span>
 
-          <button
-            type="button"
-            class="next-button"
-            (click)="nextQuestion()"
-          >
+        </div>
 
-            @if (
-              currentIndex ===
-              questions.length - 1
-            ) {
-
-              Ver resultado →
-
-            } @else {
-
-              Próxima questão →
-
-            }
-
-          </button>
-
-        }
-
-      </section>
-
-    } @else {
-
-      <section class="result-card">
-
-        <span class="result-icon">
-          🏆
-        </span>
-
-        <span class="badge">
-          RESULTADO
-        </span>
-
-        <h1>
-          {{ score }}/{{ questions.length }}
-        </h1>
-
-        <p>
-          Você concluiu o Quiz de Python!
-        </p>
+      </div>
 
 
-        <button
-          type="button"
-          class="next-button"
-          (click)="restartQuiz()"
-        >
-          🔄 Tentar novamente
-        </button>
+      <!-- Ações -->
+      <button type="button" class="retry-button" (click)="restartQuiz()">
+        ↻ Tentar novamente
+      </button>
 
 
-        <button
-          type="button"
-          class="home-button"
-          routerLink="/home"
-        >
-          Voltar ao menu
-        </button>
+      <button type="button" class="review-button" routerLink="/lessons">
+        📖 Rever as aulas
+      </button>
 
-      </section>
+
+      <button type="button" class="menu-button" routerLink="/home">
+        Voltar ao menu
+      </button>
+
+    </section>
 
     }
 
