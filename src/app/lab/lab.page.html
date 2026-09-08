@@ -5,12 +5,7 @@
     <!-- Header -->
     <header class="lab-header">
 
-      <button
-        type="button"
-        class="back-button"
-        routerLink="/home"
-        aria-label="Voltar ao menu"
-      >
+      <button type="button" class="back-button" routerLink="/home" aria-label="Voltar ao menu">
         ←
       </button>
 
@@ -40,13 +35,7 @@
 
       <div class="mascot-box">
 
-        <!--
-          Depois substituímos pelo nosso
-          mascote definitivo.
-        -->
-        <span class="mascot-placeholder">
-          🐍
-        </span>
+        <img class="mascot-image" src="assets/mascot/python-no-bolso-mascot.png" alt="Mascote do Python no Bolso" />
 
       </div>
 
@@ -115,9 +104,7 @@
       </header>
 
 
-      <app-python-terminal
-        [initialCode]="initialCode"
-      ></app-python-terminal>
+      <app-python-terminal [initialCode]="initialCode"></app-python-terminal>
 
     </section>
 

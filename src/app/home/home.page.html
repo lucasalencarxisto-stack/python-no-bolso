@@ -2,11 +2,17 @@
 
   <main class="home-container">
 
+    <button type="button" class="about-menu-button" (click)="toggleMenu()" aria-label="Abrir menu">
+      ☰
+    </button>
+
     <!-- Hero -->
     <section class="hero">
 
-      <div class="logo">
-        🐍
+      <div class="logo mascot-logo">
+
+        <img src="assets/mascot/python-no-bolso-mascot.png" alt="Mascote do Python no Bolso" />
+
       </div>
 
       <span class="badge">
@@ -134,8 +140,8 @@
 
 
       <!-- Continue aprendendo -->
-      <button type="button" class="menu-card">
-
+  
+      <button type="button" class="menu-card" routerLink="/resources">
         <span class="icon">
           📚
         </span>
@@ -157,7 +163,6 @@
         </span>
 
       </button>
-
     </section>
 
 
@@ -191,6 +196,96 @@
     <footer>
       Projeto de extensão universitária
     </footer>
+
+    @if (menuOpen) {
+
+    <div class="menu-overlay" (click)="closeMenu()">
+
+      <aside class="about-panel" (click)="$event.stopPropagation()">
+
+        <header class="about-panel-header">
+
+          <span>
+            SOBRE O PROJETO
+          </span>
+
+          <button type="button" class="close-menu-button" (click)="closeMenu()" aria-label="Fechar menu">
+            ×
+          </button>
+
+        </header>
+
+
+        <div class="developer-profile">
+
+          <img src="assets/profile/lucas.png" alt="Lucas, desenvolvedor do Python no Bolso" />
+
+          <div>
+
+            <strong>
+              Lucas
+            </strong>
+
+            <span>
+              Aluno • Unisanta • Dev
+            </span>
+
+          </div>
+
+        </div>
+
+
+        <div class="developer-message">
+
+          <strong>
+            Oi! Meu nome é Lucas 👋
+          </strong>
+
+          <p>
+            Sou aluno de Análise e Desenvolvimento
+            de Sistemas na Unisanta e desenvolvedor.
+          </p>
+
+          <p>
+            Eu e meus colegas da faculdade tivemos
+            a ideia de criar o
+            <strong>Python no Bolso</strong>
+            como parte de um projeto de extensão
+            curricular.
+          </p>
+
+          <p>
+            Nosso objetivo é tornar os primeiros
+            passos na programação mais simples e
+            acessíveis, permitindo aprender e
+            praticar Python diretamente pelo celular.
+          </p>
+
+        </div>
+
+
+        <div class="developer-links">
+
+          <a href="https://www.linkedin.com/in/lucasalencar-dev" target="_blank" rel="noopener noreferrer">
+            💼 LinkedIn
+          </a>
+
+          <a href="https://github.com/lucasalencarxisto-stack" target="_blank" rel="noopener noreferrer">
+            💻 GitHub
+          </a>
+
+        </div>
+
+
+        <div class="project-note">
+          🐍 Feito por estudantes, para quem está começando.
+        </div>
+
+      </aside>
+
+    </div>
+
+    }
 
   </main>
 
