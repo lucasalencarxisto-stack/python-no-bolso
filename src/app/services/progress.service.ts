@@ -9,6 +9,9 @@ export class ProgressService {
   private readonly storageKey =
     'python-no-bolso-completed-lessons';
 
+  private readonly courseStorageKey =
+    'python-no-bolso-course-completed';
+
 
   private getCompletedLessons(): number[] {
 
@@ -17,11 +20,9 @@ export class ProgressService {
         this.storageKey
       );
 
-
     if (!saved) {
       return [];
     }
-
 
     try {
 
@@ -71,18 +72,13 @@ export class ProgressService {
     const completed =
       this.getCompletedLessons();
 
-
     if (
       completed.includes(lessonId)
     ) {
       return;
     }
 
-
-    completed.push(
-      lessonId
-    );
-
+    completed.push(lessonId);
 
     this.saveCompletedLessons(
       completed
@@ -96,6 +92,27 @@ export class ProgressService {
     return this
       .getCompletedLessons()
       .length;
+
+  }
+
+
+  completeCourse(): void {
+
+    localStorage.setItem(
+      this.courseStorageKey,
+      'true'
+    );
+
+  }
+
+
+  isCourseCompleted(): boolean {
+
+    return (
+      localStorage.getItem(
+        this.courseStorageKey
+      ) === 'true'
+    );
 
   }
 

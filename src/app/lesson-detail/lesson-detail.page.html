@@ -348,6 +348,47 @@
 
       </section>
 
+            <!-- Finalização do curso -->
+      @if (
+        lesson.id === 6 &&
+        lessonCompleted
+      ) {
+
+        <section class="course-finish">
+
+          <div class="course-finish-content">
+
+            <span class="course-finish-icon">
+              🏆
+            </span>
+
+            <div>
+
+              <strong>
+                Você concluiu todas as aulas!
+              </strong>
+
+              <p>
+                Sua trilha de aprendizado chegou ao fim.
+                Conclua o curso para desbloquear o Quiz de Python.
+              </p>
+
+            </div>
+
+          </div>
+
+
+          <button
+            type="button"
+            class="finish-course-button"
+            (click)="completeCourse()"
+          >
+            🏁 Concluir curso
+          </button>
+
+        </section>
+
+      }
 
            <!-- Navegação entre aulas -->
       <nav class="lesson-navigation">

@@ -1,0 +1,213 @@
+ion-content {
+  --background: #090d14;
+}
+
+
+.quiz-container {
+  max-width: 520px;
+
+  margin: 0 auto;
+  padding: 28px 20px 48px;
+}
+
+
+.quiz-header {
+  display: flex;
+
+  gap: 14px;
+
+  margin-bottom: 32px;
+}
+
+
+.back-button {
+  width: 40px;
+  height: 40px;
+
+  flex-shrink: 0;
+
+  background: #121924;
+  color: #519cff;
+
+  border: 1px solid #283346;
+  border-radius: 12px;
+
+  cursor: pointer;
+}
+
+
+.badge {
+  color: #519cff;
+
+  font-size: 10px;
+  font-weight: 800;
+
+  letter-spacing: 1.2px;
+}
+
+
+.quiz-header h1 {
+  margin: 5px 0 0;
+
+  color: #f4f7fb;
+
+  font-size: 25px;
+}
+
+
+.progress {
+  margin-bottom: 12px;
+
+  color: #75849a;
+
+  font-size: 11px;
+}
+
+
+.question-card,
+.result-card {
+  padding: 22px;
+
+  background: #121924;
+
+  border: 1px solid #283346;
+  border-radius: 16px;
+}
+
+
+.question-card h2 {
+  margin: 0 0 20px;
+
+  color: #f4f7fb;
+
+  font-size: 18px;
+  line-height: 1.5;
+}
+
+
+.answers {
+  display: grid;
+
+  gap: 10px;
+}
+
+
+.answer-button {
+  padding: 14px;
+
+  text-align: left;
+
+  background: #0e141e;
+  color: #cbd5e2;
+
+  border: 1px solid #293548;
+  border-radius: 11px;
+
+  cursor: pointer;
+}
+
+
+.answer-button.correct {
+  background: #10261d;
+
+  border-color: #3d9b6f;
+}
+
+
+.answer-button.wrong {
+  background: #2a171a;
+
+  border-color: #9b4c55;
+}
+
+
+.feedback {
+  margin-top: 18px;
+  padding: 14px;
+
+  background: #251f14;
+
+  border: 1px solid #6c5628;
+  border-radius: 11px;
+}
+
+
+.feedback.success {
+  background: #10261d;
+
+  border-color: #285440;
+}
+
+
+.feedback strong {
+  color: #f4f7fb;
+}
+
+
+.feedback p {
+  margin: 7px 0 0;
+
+  color: #a9b5c5;
+
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+
+.next-button,
+.home-button {
+  width: 100%;
+
+  margin-top: 16px;
+  padding: 14px;
+
+  border-radius: 11px;
+
+  font-weight: 800;
+
+  cursor: pointer;
+}
+
+
+.next-button {
+  background: #1c5fa5;
+  color: white;
+
+  border: 1px solid #4d9fff;
+}
+
+
+.home-button {
+  background: transparent;
+  color: #91a0b4;
+
+  border: 1px solid #283346;
+}
+
+
+.result-card {
+  text-align: center;
+}
+
+
+.result-icon {
+  display: block;
+
+  margin-bottom: 15px;
+
+  font-size: 52px;
+}
+
+
+.result-card h1 {
+  margin: 10px;
+
+  color: #ffffff;
+
+  font-size: 45px;
+}
+
+
+.result-card p {
+  color: #91a0b4;
+}

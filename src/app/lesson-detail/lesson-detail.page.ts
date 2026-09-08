@@ -160,4 +160,21 @@ export class LessonDetailPage {
 
   }
 
+  completeCourse(): void {
+
+    if (
+      !this.lesson ||
+      this.lesson.id !== 6 ||
+      !this.lessonCompleted
+    ) {
+      return;
+    }
+
+    this.progress.completeCourse();
+
+    this.router.navigate([
+      '/course-complete'
+    ]);
+
+  }
 }
