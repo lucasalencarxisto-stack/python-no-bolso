@@ -1,9 +1,7 @@
-import { Injectable } from '@angular/core';
-
 import {
-  loadPyodide,
-  version as pyodideVersion
-} from 'pyodide';
+  Injectable
+} from '@angular/core';
+
 
 @Injectable({
   providedIn: 'root'
@@ -12,60 +10,187 @@ export class PyodideService {
 
   private pyodide: any = null;
 
-  private loadingPromise: Promise<any> | null = null;
+  private loadingPromise:
+    Promise<any> | null = null;
+
+  private scriptPromise:
+    Promise<void> | null = null;
 
 
-  private async initialize(): Promise<void> {
+  private readonly pyodideVersion =
+    '314.0.6';
+
+
+  private get indexURL(): string {
+
+    return (
+      'https://cdn.jsdelivr.net/pyodide/' +
+      `v${this.pyodideVersion}/full/`
+    );
+
+  }
+
+
+  private loadPyodideScript():
+    Promise<void> {
+
+    /*
+     * Se o Pyodide já estiver carregado,
+     * não adicionamos o script novamente.
+     */
+    if (
+      typeof (window as any).loadPyodide
+      === 'function'
+    ) {
+
+      return Promise.resolve();
+
+    }
+
+
+    if (this.scriptPromise) {
+
+      return this.scriptPromise;
+
+    }
+
+
+    this.scriptPromise =
+      new Promise<void>(
+        (resolve, reject) => {
+
+          const script =
+            document.createElement(
+              'script'
+            );
+
+
+          script.src =
+            `${this.indexURL}pyodide.js`;
+
+          script.async = true;
+
+
+          script.onload = () => {
+
+            console.log(
+              '[Pyodide] ✅ Script carregado'
+            );
+
+            resolve();
+
+          };
+
+
+          script.onerror = () => {
+
+            this.scriptPromise = null;
+
+            reject(
+              new Error(
+                'Não foi possível carregar o Pyodide.'
+              )
+            );
+
+          };
+
+
+          document.head.appendChild(
+            script
+          );
+
+        }
+      );
+
+
+    return this.scriptPromise;
+
+  }
+
+
+  private async initialize():
+    Promise<void> {
 
     if (this.pyodide) {
-      console.log('[Pyodide] Runtime já carregado.');
+
+      console.log(
+        '[Pyodide] Runtime já carregado.'
+      );
+
       return;
+
     }
+
 
     console.log(
       '[Pyodide] Iniciando...',
-      pyodideVersion
+      this.pyodideVersion
     );
 
-    const indexURL =
-      `https://cdn.jsdelivr.net/pyodide/v${pyodideVersion}/full/`;
 
     console.log(
       '[Pyodide] CDN:',
-      indexURL
+      this.indexURL
     );
+
+
+    await this.loadPyodideScript();
 
 
     if (!this.loadingPromise) {
 
-      this.loadingPromise = loadPyodide({
-        indexURL
-      });
+      const loadPyodide =
+        (window as any).loadPyodide;
+
+
+      if (
+        typeof loadPyodide !==
+        'function'
+      ) {
+
+        throw new Error(
+          'loadPyodide não está disponível.'
+        );
+
+      }
+
+
+      this.loadingPromise =
+        loadPyodide({
+
+          indexURL:
+            this.indexURL
+
+        });
 
     }
 
 
     try {
 
-      this.pyodide = await Promise.race([
+      this.pyodide =
+        await Promise.race([
 
-        this.loadingPromise,
+          this.loadingPromise,
 
-        new Promise((_, reject) => {
+          new Promise(
+            (_, reject) => {
 
-          setTimeout(() => {
+              setTimeout(() => {
 
-            reject(
-              new Error(
-                'O Python demorou mais de 20 segundos para inicializar.'
-              )
-            );
+                reject(
+                  new Error(
+                    'O Python demorou mais de 20 segundos para inicializar.'
+                  )
+                );
 
-          }, 20000);
+              }, 20000);
 
-        })
+            }
+          )
 
-      ]);
+        ]);
+
 
       console.log(
         '[Pyodide] ✅ Runtime carregado!'
@@ -78,26 +203,28 @@ export class PyodideService {
         error
       );
 
-      /*
-       * Permite uma nova tentativa.
-       * Sem isso uma Promise quebrada ficaria
-       * guardada para sempre.
-       */
+
       this.loadingPromise = null;
 
       throw error;
+
     }
+
   }
 
 
-  async run(code: string): Promise<string> {
+  async run(
+    code: string
+  ): Promise<string> {
 
     console.log(
       '[Pyodide] Código recebido:',
       code
     );
 
+
     await this.initialize();
+
 
     console.log(
       '[Pyodide] Executando Python...'
@@ -111,7 +238,9 @@ export class PyodideService {
 
     this.pyodide.setStdout({
 
-      batched: (text: string) => {
+      batched: (
+        text: string
+      ) => {
 
         console.log(
           '[Python stdout]',
@@ -127,7 +256,9 @@ export class PyodideService {
 
     this.pyodide.setStderr({
 
-      batched: (text: string) => {
+      batched: (
+        text: string
+      ) => {
 
         console.error(
           '[Python stderr]',
@@ -144,9 +275,10 @@ export class PyodideService {
     try {
 
       const result =
-        await this.pyodide.runPythonAsync(
-          code
-        );
+        await this.pyodide
+          .runPythonAsync(
+            code
+          );
 
 
       console.log(
@@ -181,7 +313,9 @@ export class PyodideService {
       }
 
 
-      return output.join('\n');
+      return output.join(
+        '\n'
+      );
 
     } catch (error) {
 
@@ -193,5 +327,7 @@ export class PyodideService {
       throw error;
 
     }
+
   }
+
 }
