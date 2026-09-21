@@ -6,7 +6,7 @@ ion-content {
   min-height: 100%;
   max-width: 520px;
   margin: 0 auto;
-  padding: 64px 24px 32px;
+  padding: max(64px, calc(var(--ion-safe-area-top, 0px) + 20px)) 24px max(32px, calc(var(--ion-safe-area-bottom, 0px) + 20px));
 
   display: flex;
   flex-direction: column;
@@ -161,7 +161,7 @@ footer {
   position: fixed;
 
   left: 50%;
-  bottom: 28px;
+  bottom: calc(28px + var(--ion-safe-area-bottom, 0px));
 
   z-index: 1000;
 
@@ -251,7 +251,7 @@ footer {
 .about-menu-button {
   position: absolute;
 
-  top: 20px;
+  top: max(20px, calc(var(--ion-safe-area-top, 0px) + 8px));
   right: 20px;
 
   z-index: 20;
